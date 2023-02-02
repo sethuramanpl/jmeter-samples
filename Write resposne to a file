@@ -1,0 +1,19 @@
+/* use BeanShell or JSR223 PostProcessor to write the response data to a file in JMeter. Here is an example using BeanShell:
+
+Add a BeanShell PostProcessor as a child of the HTTP Request Sampler you want to write the response of.
+In the BeanShell PostProcessor, enter the following code: */
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+String fileName = "jmeter_response.txt";
+String response = prev.getResponseDataAsString();
+
+try {
+    FileWriter writer = new FileWriter(fileName, true);
+    writer.write(response);
+    writer.write("\n");
+    writer.close();
+} catch (IOException ex) {
+    log.error("Error while writing response to file", ex);
+}
